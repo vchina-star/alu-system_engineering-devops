@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Configures Nginx to redirect /redirect_me with a 301 Moved Permanently
+apt-get update -y
+apt-get install -y nginx
+echo "Holberton School for the win!" > /var/www/html/index.nginx-debian.html
+
+redirect="location /redirect_me {\n\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n}\n"
+sed -i "/server_name _;/a \\\t$redirect" /etc/nginx/sites-available/default
+
+service nginx restart
