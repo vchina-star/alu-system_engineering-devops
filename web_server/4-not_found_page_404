@@ -5,8 +5,26 @@ apt-get install -y nginx
 echo "Holberton School for the win!" > /var/www/html/index.nginx-debian.html
 echo "Ceci n'est pas une page" > /var/www/html/404.html
 
-redirect="location /redirect_me {\n\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n}\n"
-error_page="error_page 404 /404.html;\n\tlocation = /404.html {\n\t\tinternal;\n\t}\n"
-sed -i "/server_name _;/a \\\t$redirect\t$error_page" /etc/nginx/sites-available/default
+printf "%s\n" \
+"server {" \
+"	listen 80 default_server;" \
+"	listen [::]:80 default_server;" \
+"	root /var/www/html;" \
+"	index index.html index.htm index.nginx-debian.html;" \
+"	server_name _;" \
+"" \
+"	location / {" \
+"		try_files \$uri \$uri/ =404;" \
+"	}" \
+"" \
+"	location /redirect_me {" \
+"		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;" \
+"	}" \
+"" \
+"	error_page 404 /404.html;" \
+"	location = /404.html {" \
+"		internal;" \
+"	}" \
+"}" > /etc/nginx/sites-available/default
 
 service nginx restart
