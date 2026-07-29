@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Fix Apache so it starts and serves "Hello Holberton" on the root page
+service apache2 start
