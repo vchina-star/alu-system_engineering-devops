@@ -1,12 +1,59 @@
 #!/usr/bin/env bash
-# Configures Nginx to run as the nginx user listening on port 8080
+# Runs Nginx as the nginx user and listens on all IPv4 addresses on port 8080
 
-# Fix port in configuration file
-sed -i 's/listen 80/listen 8080/g' /etc/nginx/sites-available/default
-sed -i 's/80/8080/g' /etc/nginx/sites-available/default
+service apache2 stop >/dev/null 2>&1 || true
+pkill apache2 2>/dev/null || true
+pkill nginx 2>/dev/null || true
+id -u nginx >/dev/null 2>&1 || useradd -r -s /bin/false nginx
 
-# Stop any running Nginx service
-service nginx stop
+rm -f /tmp/nginx.pid
 
-# Run Nginx directly under the nginx user
-sudo -u nginx nginx
+mkdir -p /tmp/nginx-client-body
+mkdir -p /tmp/nginx-proxy
+mkdir -p /tmp/nginx-fastcgi
+mkdir -p /tmp/nginx-uwsgi
+mkdir -p /tmp/nginx-scgi
+
+chown -R nginx:nginx /tmp/nginx-client-body
+chown -R nginx:nginx /tmp/nginx-proxy
+chown -R nginx:nginx /tmp/nginx-fastcgi
+chown -R nginx:nginx /tmp/nginx-uwsgi
+chown -R nginx:nginx /tmp/nginx-scgi
+
+cat > /tmp/nginx.conf << 'NGINX'
+daemon on;
+pid /tmp/nginx.pid;
+error_log /tmp/nginx-error.log;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    access_log /tmp/nginx-access.log;
+
+    client_body_temp_path /tmp/nginx-client-body;
+    proxy_temp_path /tmp/nginx-proxy;
+    fastcgi_temp_path /tmp/nginx-fastcgi;
+    uwsgi_temp_path /tmp/nginx-uwsgi;
+    scgi_temp_path /tmp/nginx-scgi;
+
+    server {
+        listen 0.0.0.0:8080 default_server;
+        server_name _;
+
+        root /usr/share/nginx/html;
+        index index.html index.htm;
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+    }
+}
+NGINX
+
+chmod 644 /tmp/nginx.conf
+sudo -u nginx /usr/sbin/nginx -c /tmp/nginx.conf
