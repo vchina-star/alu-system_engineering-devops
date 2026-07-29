@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Ensures Nginx is running and listening on port 80
+# Fixes Nginx to ensure it is running and listening on port 80
 
-service nginx status > /dev/null 2>&1 || service nginx start
+service nginx status || service nginx start
 service nginx restart
