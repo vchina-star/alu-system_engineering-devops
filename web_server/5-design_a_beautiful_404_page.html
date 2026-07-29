@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ceci n'est pas une page</title>
+<style>
+:root{--wall:#cfc7b8;--wall-shadow:#b8ae9c;--frame-outer:#3a2c1c;--frame-inner:#d9b878;--canvas:#e8e3d6;--ink:#1c1a16;--plaque:#2b2620;--plaque-text:#e8e3d6;--accent:#7a2e28;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;padding:3rem 1.5rem;background:radial-gradient(ellipse at 50% 35%,var(--wall) 0%,var(--wall-shadow) 100%);font-family:Georgia,serif;color:var(--ink);}
+.gallery-eyebrow{text-transform:uppercase;letter-spacing:0.42em;font-size:0.7rem;color:var(--plaque);opacity:0.65;font-family:'Courier New',monospace;}
+.frame{position:relative;padding:18px;background:linear-gradient(145deg,var(--frame-inner),#c9a35f 40%,#8a6d3a 100%);border-radius:3px;box-shadow:0 30px 60px -20px rgba(0,0,0,0.55);max-width:520px;width:100%;animation:hang 6s ease-in-out infinite;transform-origin:top center;}
+.frame::before{content:"";position:absolute;inset:6px;border:3px solid var(--frame-outer);border-radius:2px;pointer-events:none;}
+.canvas{position:relative;background:radial-gradient(ellipse at 50% 45%,#f2eee2 0%,var(--canvas) 70%,#d8d2c2 100%);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;padding:2rem;overflow:hidden;}
+.doc{width:118px;height:150px;position:relative;background:#fbfaf5;box-shadow:0 14px 30px -10px rgba(0,0,0,0.35);transform:rotate(-4deg);}
+.doc::before{content:"";position:absolute;top:0;right:0;border-width:0 26px 26px 0;border-style:solid;border-color:var(--wall) #e4dccb;}
+.doc .line{position:absolute;left:16px;height:6px;border-radius:3px;background:#cdc6b4;}
+.doc .line:nth-child(1){top:34px;width:60px;}
+.doc .line:nth-child(2){top:50px;width:82px;}
+.doc .line:nth-child(3){top:66px;width:74px;}
+.doc .line:nth-child(4){top:82px;width:82px;}
+.doc .line:nth-child(5){top:98px;width:44px;}
+.caption{font-style:italic;font-size:clamp(1.35rem,4vw,1.9rem);color:var(--ink);text-align:center;}
+.plaque{background:var(--plaque);color:var(--plaque-text);padding:1.1rem 1.6rem;max-width:520px;width:100%;border-radius:2px;box-shadow:0 10px 25px -12px rgba(0,0,0,0.5);}
+.plaque .title{font-style:italic;font-size:1.05rem;margin-bottom:0.35rem;}
+.plaque .meta{font-family:'Courier New',monospace;font-size:0.75rem;letter-spacing:0.05em;opacity:0.8;line-height:1.6;}
+.plaque .code{color:#d9a441;}
+.home-link{display:inline-block;margin-top:0.9rem;font-family:'Courier New',monospace;font-size:0.78rem;letter-spacing:0.06em;color:var(--plaque-text);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:2px;}
+.home-link:hover{opacity:0.65;}
+@keyframes hang{0%,100%{transform:rotate(-0.6deg);}50%{transform:rotate(0.6deg);}}
+@media (prefers-reduced-motion:reduce){.frame{animation:none;}}
+</style>
+</head>
+<body>
+<p class="gallery-eyebrow">Salle 404 &middot; Gallery of Missing Pages</p>
+<figure class="frame" aria-label="A framed painting of a document titled this is not a page">
+<div class="canvas">
+<div class="doc" aria-hidden="true">
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"></span>
+</div>
+<figcaption class="caption">Ceci n'est pas une page</figcaption>
+</div>
+</figure>
+<div class="plaque">
+<p class="title">Ceci n'est pas une page</p>
+<p class="meta">after Ren&eacute; Magritte &middot; oil on server<br>Error <span class="code">404</span> &mdash; the page you seek is only a representation of an idea, and the idea has moved.</p>
+<a class="home-link" href="/">&larr; return to the collection</a>
+</div>
+</body>
+</html>
